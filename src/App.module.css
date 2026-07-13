@@ -1,0 +1,505 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap');
+
+/* ==========================================================================
+   1. GLOBAL SYSTEM STYLES & LAYOUT
+   ========================================================================== */
+:global(body) {
+  margin: 0;
+  padding: 0;
+  background-color: #000000;
+  font-family: 'JetBrains Mono', monospace;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow: hidden;
+}
+
+.appLayout {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-color: #121214;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.mainContent {
+  flex: 1;
+  padding: 24px;
+  overflow-y: auto;
+  padding-bottom: 40px;
+}
+
+.mainContent::-webkit-scrollbar {
+  width: 8px;
+}
+
+.mainContent::-webkit-scrollbar-track {
+  background: #0b0b0c;
+}
+
+.mainContent::-webkit-scrollbar-thumb {
+  background: #202024;
+  border-radius: 4px;
+}
+
+.mainContent::-webkit-scrollbar-thumb:hover {
+  background: #ff5722;
+}
+
+/* ==========================================================================
+   2. STORAGE / PARTITION VIEW COMPONENT LAYOUTS
+   ========================================================================== */
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.header {
+  border-bottom: 1px solid #1c1c1e;
+  padding-bottom: 16px;
+  margin-bottom: 8px;
+}
+
+.title {
+  margin: 0;
+  font-size: 24px;
+  color: #e1e1e6;
+  font-weight: 500;
+  letter-spacing: -0.3px;
+}
+
+.subtitle {
+  color: #7c7c8a;
+  margin: 6px 0 0 0;
+  font-size: 13px;
+}
+
+.scanButton {
+  align-self: flex-start;
+  padding: 10px 20px;
+  background-color: transparent;
+  color: #ff5722;
+  border: 1px solid #ff5722;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  transition: all 0.2s ease;
+}
+
+.scanButton:hover:not(:disabled) {
+  background-color: rgba(255, 87, 34, 0.1);
+  box-shadow: 0 0 12px rgba(255, 87, 34, 0.15);
+}
+
+.scanButton:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.scanButton:disabled {
+  border-color: #29292e;
+  color: #7c7c8a;
+  cursor: not-allowed;
+}
+
+/* --- PARTITION TABLE SYSTEM (5-Columns matched to JSX) --- */
+.partitionHeader, 
+.partitionCard {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr 3fr;
+  align-items: center;
+  padding: 14px 16px;
+  gap: 16px;
+  font-size: 13px;
+}
+
+.partitionHeader {
+  color: #7c7c8a;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border-bottom: 1px solid #202024;
+  font-weight: 600;
+}
+
+.partitionCard {
+  background-color: transparent;
+  border-bottom: 1px solid #1c1c1e;
+  color: #c4c4cc;
+  transition: background-color 0.15s ease;
+}
+
+.partitionCard:hover {
+  background-color: #161619;
+}
+
+/* --- AUDIT TARGETS TABLE SYSTEM (4-Columns matched to JSX) --- */
+.auditHeader, 
+.auditCard {
+  display: grid;
+  grid-template-columns: 2.5fr 4.5fr 1.5fr auto;
+  align-items: center;
+  padding: 14px 16px;
+  gap: 16px;
+  font-size: 13px;
+}
+
+.auditHeader {
+  color: #7c7c8a;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border-bottom: 1px solid #202024;
+  font-weight: 600;
+  margin-top: 8px;
+}
+
+.auditCard {
+  background-color: transparent;
+  border-bottom: 1px solid #1c1c1e;
+  color: #c4c4cc;
+  transition: background-color 0.15s ease;
+}
+
+.auditCard:hover {
+  background-color: #161619;
+}
+
+/* --- FILTER CONTROLS & UTILITIES --- */
+.filterRow {
+  display: flex;
+  gap: 12px;
+  margin: 16px 0;
+  border-bottom: 1px solid #1c1c1e;
+  padding-bottom: 16px;
+}
+
+.filterButton {
+  background: transparent;
+  border: 1px solid #202024;
+  color: #7c7c8a;
+  padding: 8px 16px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all 0.15s ease;
+}
+
+.filterButton:hover {
+  border-color: #38383d;
+  color: #e1e1e6;
+}
+
+.filterButtonActive {
+  border-color: #ff5722;
+  color: #ff5722;
+  background-color: rgba(255, 87, 34, 0.05);
+}
+
+.deleteButton {
+  background: transparent;
+  border: 1px solid #f75a68;
+  color: #f75a68;
+  padding: 6px 14px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  cursor: pointer;
+  border-radius: 4px;
+  width: 80px;
+  text-align: center;
+  transition: all 0.15s ease;
+}
+
+.deleteButton:hover {
+  background: rgba(247, 90, 104, 0.1);
+}
+
+.filesystemLabel {
+  color: #7c7c8a;
+  font-size: 12px;
+}
+
+/* Minimalist Progress Track Component */
+.progressTrack {
+  width: 100%;
+  max-width: 180px;
+  background-color: #202024;
+  height: 6px;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.progressBar {
+  height: 100%;
+  transition: width 0.5s ease;
+}
+
+.progressNormal {
+  background-color: #ff5722;
+}
+
+.progressWarning {
+  background-color: #f75a68;
+}
+
+/* ==========================================================================
+   2b. BACKWARD COMPATIBILITY / GENERIC TABLE SYSTEM (SERVICES & USERS)
+   ========================================================================== */
+.tableHeader, 
+.card {
+  display: grid;
+  /* 5 explicit columns perfectly matching: Name, Active, Sub, Description, Action */
+  grid-template-columns: 2fr 1.2fr 1.2fr 3.5fr 1.2fr;
+  align-items: center;
+  padding: 14px 16px;
+  gap: 16px;
+  font-size: 13px;
+}
+
+.tableHeader {
+  color: #7c7c8a;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border-bottom: 1px solid #202024;
+  font-weight: 600;
+  margin-top: 8px;
+}
+
+.card {
+  background-color: transparent;
+  border-bottom: 1px solid #1c1c1e;
+  color: #c4c4cc;
+  transition: background-color 0.15s ease;
+}
+
+.card:hover {
+  background-color: #161619;
+}
+
+/* Ensure active status text stands out in the grid like the mockup */
+.card div[style*="color: rgb(76, 175, 80)"],
+.card div:nth-child(2) {
+  font-weight: 600;
+}
+
+
+/* ==========================================================================
+   3. GLOBAL STATUS FOOTER COMPONENT
+   ========================================================================== */
+.statusFooter {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  background-color: #0b0b0c;
+  border-top: 1px solid #202024;
+  padding: 10px 24px;
+  font-size: 12px;
+  color: #7c7c8a;
+  width: 100%;
+  box-sizing: border-box;
+  z-index: 100;
+  flex-shrink: 0;
+}
+
+.statGroup {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.statLabel {
+  color: #7c7c8a;
+  font-weight: 500;
+}
+
+.statValue {
+  color: #e1e1e6;
+  font-weight: 700;
+}
+
+.statHighlight {
+  color: #ff6b35; 
+}
+
+.footerTime {
+  margin-left: auto;
+  color: #7c7c8a;
+  font-weight: 500;
+}
+
+/* ==========================================================================
+   4. TWO-COLUMN CONTAINER LAYOUT WITH SIDEBAR
+   ========================================================================== */
+.windowWrapper {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  flex: 1;
+  overflow: hidden;
+}
+
+.sidebar {
+  background-color: #0b0b0c;
+  border-right: 1px solid #1c1c1e;
+  display: flex;
+  flex-direction: column;
+  padding: 24px 16px;
+  box-sizing: border-box;
+}
+
+.brandContainer {
+  margin-bottom: 40px;
+  padding-left: 8px;
+}
+
+.brandName {
+  font-size: 26px;
+  font-weight: 700;
+  color: #ff5722;
+  letter-spacing: 1px;
+  margin: 0;
+}
+
+.brandTagline {
+  font-size: 11px;
+  color: #7c7c8a;
+  text-transform: uppercase;
+  margin: 4px 0 0 0;
+  letter-spacing: 0.5px;
+}
+
+.navMenu {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.navItem {
+  background: transparent;
+  border: none;
+  color: #7c7c8a;
+  text-align: left;
+  padding: 12px 14px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: all 0.15s ease;
+}
+
+.navItem:hover {
+  color: #e1e1e6;
+  background-color: #161619;
+}
+
+.navItemActive {
+  color: #ff5722 !important;
+  background-color: rgba(255, 87, 34, 0.06);
+  font-weight: 600;
+}
+
+/* ==========================================================================
+   5. CUSTOM TITLE BAR (FRAMELESS WINDOW CONTROLS)
+   ========================================================================== */
+.titlebar {
+  height: 32px;
+  background-color: #0b0b0c;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  border-bottom: 1px solid #1c1c1e;
+  user-select: none;
+  width: 100%;
+  flex-shrink: 0; 
+  position: relative;
+}
+
+.titlebarDragRegion {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 96px; 
+  height: 100%;
+  z-index: 1;
+}
+
+.titlebarButton {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 32px;
+  height: 32px;
+  background: transparent;
+  border: none;
+  color: #7c7c8a;
+  cursor: pointer;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 14px;
+  transition: all 0.15s ease;
+  z-index: 1000;
+}
+
+.titlebarButton:hover {
+  background-color: #161619;
+  color: #e1e1e6;
+}
+
+.closeButton:hover {
+  background-color: #ff5722 !important; 
+  color: #ffffff !important;
+}
+
+/* ==========================================================================
+   6. CUSTOM DIALOG MODAL SYSTEM
+   ========================================================================== */
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.75);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  backdrop-filter: blur(2px);
+}
+
+.modalBox {
+  background-color: #0b0b0c;
+  border: 1px solid #ff5722;
+  padding: 24px;
+  border-radius: 6px;
+  max-width: 500px;
+  width: 90%;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.modalTitle {
+  margin: 0 0 12px 0;
+  color: #f75a68;
+  font-size: 16px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.modalBody {
+  color: #c4c4cc;
+  font-size: 13px;
+  line-height: 1.6;
+  margin-bottom: 24px;
+  word-break: break-all;
+}
+
+.modalActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
